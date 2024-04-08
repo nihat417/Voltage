@@ -1,0 +1,137 @@
+﻿@using Voltage.Entities.Entity;
+@model IEnumerable<User>
+
+
+<style>
+    .rectangle {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow: hidden;
+        border-radius: 10px;
+        background: lightgray;
+        max-width: 680px;
+        margin: 10px;
+    }
+
+    .voiceEfect {
+        margin: 2px;
+        border-radius: 30px;
+        background: blue;
+        min-width: 10px;
+    }
+</style>
+
+
+<link rel="stylesheet" type="text/css" href="/css/Textanimate.css" />
+<link rel="stylesheet" href="/css/PushDate.css" />
+<link href="/dist/libs/dropzone/dist/dropzone.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.css" crossorigin="anonymous" />
+<div class="page-body">
+    <div class="container-xl">
+        <div class="card">
+            <div class="row g-0">
+                <div id="MessageFriendList" class="col-12 col-lg-5 col-xl-3 border-end-wide">
+                    <div class="card-header d-block d-md-block">
+                        <div class="input-icon">
+                            <span class="input-icon-addon">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
+                            </span>
+                            <input type="text" value="" class="form-control mb-1" placeholder="Search…" aria-label="Search" />
+                        </div>
+                    </div>
+                    <div class="card-body p-0 scrollable" style="max-height: 35rem;">
+                        <div class="nav flex-column nav-pills" role="tablist">
+                            @foreach (var item in Model)
+                            {
+                                <a href="#chat-@item.UserName" onclick="clickToUser('@item.UserName')" class="nav-link text-start mw-100 p-3" id="chat-@item.UserName-tab" data-bs-toggle="pill" role="tab" aria-selected="true" data-user-name="@item.UserName" data-user-photo="@item.Photo" data-user-status="Online">
+                                    <div class="row align-items-center flex-fill">
+                                        <div class="col-auto">
+                                            <span class="avatar" style="background-image: url('@item.Photo')"></span>
+                                        </div>
+                                        <div class="col text-body">
+                                            <div>@item.UserName</div>
+                                            <div id="lastMessage" class="text-secondary text-truncate w-100"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div id="messageAreas1" class="col-12 col-lg-7 col-xl-9 d-flex flex-column hide-on-small-screen">
+                    <div class="patterns" id="animationtext">
+                        <svg width="100%" height="100%">
+                            <defs>
+
+                            </defs>
+                            <rect x="0" y="0" width="100%" height="100%" fill="url(#polka-dots)"> </rect>
+                            <text x="50%" y="60%" text-anchor="middle">
+                                Voltage 🗲
+                            </text>
+                        </svg>
+                    </div>
+                    <div id="MessageSection" class="displaynone">
+                        <div id="chatHeader" class="card-header d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <div class="col-auto mx-3 backbtn">
+                                    <button id="backMsgFriendlist" onclick="backFriendList()" class="btn btn-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-arrow-left-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 2a10 10 0 0 1 .324 19.995l-.324 .005l-.324 -.005a10 10 0 0 1 .324 -19.995zm.707 5.293a1 1 0 0 0 -1.414 0l-4 4a1.048 1.048 0 0 0 -.083 .094l-.064 .092l-.052 .098l-.044 .11l-.03 .112l-.017 .126l-.003 .075l.004 .09l.007 .058l.025 .118l.035 .105l.054 .113l.043 .07l.071 .095l.054 .058l4 4l.094 .083a1 1 0 0 0 1.32 -1.497l-2.292 -2.293h5.585l.117 -.007a1 1 0 0 0 -.117 -1.993h-5.586l2.293 -2.293l.083 -.094a1 1 0 0 0 -.083 -1.32z" stroke-width="0" fill="currentColor" /></svg>
+                                    </button>
+                                </div>
+                                <div class="col-auto mx-2">
+                                    <span class="avatar" style="background-image: url()"></span>
+                                </div>
+                                <div class="col-auto ms-2">
+                                    <h4 class="mb-2"></h4>
+                                    <h5 class="mb-0" id="userStatus"></h5>
+                                </div>
+                            </div>
+                            <div class="d-flex col-auto">
+                                <a href="#" class="link-secondary me-3" data-bs-toggle="tooltip" aria-label="Clear search" title="Clear search">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-phone-call" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /><path d="M15 7a2 2 0 0 1 2 2" /><path d="M15 3a6 6 0 0 1 6 6" /></svg>
+                                </a>
+                                <a href="#" class="link-secondary me-2" data-bs-toggle="tooltip" aria-label="Clear search" title="Clear search">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-video" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" /><path d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" /></svg>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="text-center mt-5">
+                            <div id="stylishDiv" class="badge bg-purple text-purple-fg">
+                                Custom Tarix
+                            </div>
+                        </div>
+                        <div id="overChatBubbles" class="card-body scrollable" style="height: 35rem">
+                            <div class="chat">
+                                <div class="chat-bubbles"></div>
+                            </div>
+                        </div>
+                        <div id="chat-footer" class="card-footer">
+                            <div id="chat-inputs" class="input-group input-group-flat">
+                                <input type="text" class="form-control" id="messageInput" autocomplete="off" placeholder="Type message" oninput="adjustTextareaRows()" />
+                                <span class="input-group-text">
+                                    <a href="#" id="sendButton" class="link-secondary ms-2" data-bs-toggle="tooltip">
+                                        <svg id="sendBtnIc" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-send" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 14l11 -11" /><path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5" /></svg>
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.js" integrity="sha512-aGWPnmdBhJ0leVHhQaRASgb0InV/Z2BWsscdj1Vwt29Oic91wECPixuXsWESpFfCcYPLfOlBZzN2nqQdMxlGTQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js" integrity="sha512-VQQXLthlZQO00P+uEu4mJ4G4OAgqTtKG1hri56kQY1DtdLeIqhKUp9W/lllDDu3uN3SnUNawpW7lBda8+dSi7w==" crossorigin="anonymous"></script>
+<script>
+    document.getElementById("messageInput").addEventListener("keypress", async event => {
+        if (event.key === "Enter") await sendMessage(event)
+    });
+
+    document.getElementById("sendButton").addEventListener("click", async event => {
+        await sendMessage(event);
+    });
+
+</script>

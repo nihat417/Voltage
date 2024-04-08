@@ -1,0 +1,183 @@
+﻿@model SignUpViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>@ViewData["Title"] - Voltage</title>
+
+    <link href="~/dist/css/tabler.min.css" rel="stylesheet" />
+    <link href="~/dist/css/tabler-flags.min.css" rel="stylesheet" />
+    <link href="~/dist/css/tabler-payments.min.css" rel="stylesheet" />
+    <link href="~/dist/css/tabler-vendors.min.css" rel="stylesheet" />
+    <link href="~/dist/css/demo.min.css" rel="stylesheet" />
+    <link href="~/Voltage.styles.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <script src="/js/ThemeConfig.js"></script>
+    <div class="page page-center" id="app">
+        <div class="container container-slim py-4">
+            <div class="text-center">
+                <div class="mb-3">
+                    <a href="/Main/MainPage/Index" class="navbar-brand navbar-brand-autodark"><img src="/wwwroot/dist/img/logos/logo-small.svg" height="36" alt=""></a>
+                </div>
+                <div class="text-secondary mb-3">Preparing application</div>
+                <div class="progress progress-sm">
+                    <div class="progress-bar progress-bar-indeterminate"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page page-center">
+        <div class="container container-tight py-4">
+            <div class="text-center mb-4">
+                <a href="." class="navbar-brand navbar-brand-autodark">
+                    <img src="/dist/img/logos/logo-white.svg" width="110" height="32" alt="Tabler" class="navbar-brand-image">
+                </a>
+            </div>
+            <form class="card card-md" id="signupForm" href="/Account/SignUp" method="post" autocomplete="off" enctype="multipart/form-data" novalidate>
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Create new account</h2>
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <div class="input-icon mb-3">
+                            <span class="input-icon-addon">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></svg>
+                            </span>
+                            <input type="text" asp-for="UserName" class="form-control" placeholder="Username">
+                        </div>
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email address</label>
+                        <input type="email" asp-for="Email" class="form-control" placeholder="Enter email">
+                    </div>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                    <div class="mb-3">
+                        <div class="form-label">Input Profile Photo</div>
+                        <input type="file" asp-for="Photo" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Select Your Country</label>
+                        <select type="text" asp-for="Country" class="form-select" id="select-countries" value=""></select>
+                    </div>
+                    <input type="hidden" asp-for="DateOfBirth" name="DateOfBirth" id="DateOfBirth" />
+                    <div class="mb-3">
+                        <label class="form-label">Date of birth</label>
+                        <div class="row g-2">
+                            <div class="col-5">
+                                <select id="month" name="user[month]" class="form-select">
+                                    <option value="">Month</option>
+                                    <option value="1">January</option>
+                                    <option value="2">February</option>
+                                    <option value="3">March</option>
+                                    <option value="4">April</option>
+                                    <option value="5">May</option>
+                                    <option value="6">June</option>
+                                    <option value="7">July</option>
+                                    <option value="8">August</option>
+                                    <option value="9">September</option>
+                                    <option value="10">October</option>
+                                    <option value="11">November</option>
+                                    <option value="12">December</option>
+                                </select>
+                            </div>
+                            <div class="col-3">
+                                <select id="day" name="user[day]" class="form-select">
+                                    <option value="">Day</option>
+                                </select>
+                            </div>
+                            <div class="col-4">
+                                <select id="year" name="user[year]" class="form-select">
+                                    <option value="">Year</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <div class="input-group input-group-flat">
+                            <input type="password" asp-for="Password" id="password-input" class="form-control" placeholder="Password" autocomplete="off">
+                            <span class="input-group-text">
+                                <a href="#" class="link-secondary" title="Show password" data-bs-toggle="tooltip" id="show-password-toggle">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
+                                </a>
+                            </span>
+                        </div>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Confirm Password</label>
+                        <div class="input-group input-group-flat">
+                            <input type="password" asp-for="ConfirmPassword" id="password-input2" class="form-control" placeholder="Confirm Password" autocomplete="off">
+                            <span class="input-group-text">
+                                <a href="#" class="link-secondary" title="Show password" data-bs-toggle="tooltip" id="show-password-toggle2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
+                                </a>
+                            </span>
+                        </div>
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-check">
+                            <input type="checkbox" class="form-check-input" asp-for="Agree"/>
+                            <span class="form-check-label">Agree the <a href="/Account/TermsPolicy" tabindex="-1">terms and policy</a>.</span>
+                        </label>
+                    </div>
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div id="clientValidation" class="text-danger"></div>
+                    <div class="form-footer">
+                        <button type="submit" class="btn btn-primary w-100">Create new account</button>
+                    </div>
+                </div>
+                <div class="hr-text">or</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <a  asp-controller="Account" asp-area="" asp-action="ExternalLogin" asp-route-provider="Google" asp-route-returnUrl="@ViewContext.HttpContext.Request.PathBase" class="btn w-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-google" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M17.788 5.108a9 9 0 1 0 3.212 6.892h-8"></path>
+                                </svg>
+                                Register with Google
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="text-center text-secondary mt-3">
+                Already have account? <a href="/Account/Login" tabindex="-1">Sign in</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/js/SignUpPasswordShow.js"></script>
+    <script src="/js/site.js" defer asp-append-version="true"></script>
+    <script src="/dist/libs/tom-select/dist/js/tom-select.base.min.js"></script>
+    <script src="/dist/libs/nouislider//dist/nouislider.min.js"></script>
+    <script src="/js/CountrySelect.js"></script>
+    <script src="/js/SignUpMain.js"></script>
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function (event) {
+            var userNameValue = document.querySelector('[name="UserName"]').value;
+            var emailValue = document.querySelector('[name="Email"]').value;
+            var passwordValue = document.querySelector('[name="Password"]').value;
+            var confirmPasswordValue = document.querySelector('[name="ConfirmPassword"]').value;
+            var agreeChecked = document.querySelector('[name="Agree"]').checked;
+
+            if (!userNameValue.trim() || !emailValue.trim() || !passwordValue.trim() || !confirmPasswordValue.trim() || !agreeChecked) {
+                event.preventDefault();
+                document.getElementById("clientValidation").innerText = 'Please fill in all required fields.';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+@import url('https://rsms.me/inter/inter.css');
+
+:root {
+    --tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
+}
+
+body {
+    font-feature-settings: "cv03", "cv04", "cv11";
+}
+
+.displaynone{
+    display:none!important;
+}
+
+.backbtn{
+    display:none;
+}
+
+#alertContainer {
+    position: absolute;
+    margin: 10px;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    width: 100%;
+    max-width: 400px;
+}
+#ppSettings{
+    display:flex;
+    flex-direction:row;
+}
+#ppSettings div{
+    padding:5px;
+    align-items:center;
+}
+
+.introjs-tooltip-header {
+    color: black;
+}
+
+.introjs-tooltiptext{
+    color:black;
+}
+
+
+@media (max-width: 993px) {
+    .hide-on-small-screen {
+        display: none !important;
+    }
+    .backbtn {
+        display: flex;
+    }
+
+   
+}
+
+@media(max-width:430px){
+    #ppSettings {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #ppSettings div a{
+        margin:10px 0 10px 0;
+    }
+    .custom-inp{
+        min-width:100px
+    }
+}
+
+

@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>@ViewData["Title"] - Voltage</title>
+
+    
+    <link href="~/dist/css/tabler.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/dist/css/tabler-flags.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/dist/css/tabler-payments.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/dist/css/tabler-vendors.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/dist/css/demo.min.css" rel="stylesheet" asp-append-version="true"/>
+    <link href="/css/site.css" rel="stylesheet" asp-append-version="true" />
+    
+    @* <link href="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/minified/introjs.min.css" rel="stylesheet" asp-append-version="true"> *@
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.css" rel="stylesheet" asp-append-version="true" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/6.0.0/introjs.min.css" asp-append-version="true" rel="stylesheet" />
+</head>
+<body>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.11/signalr.min.js"></script>
+    <script src="~/js/SignalR.js"></script>
+    <script src="~/js/ThemeConfig.js"></script>
+    <div class="page page-center" id="loader">
+        <div class="container container-slim py-4">
+            <div class="text-center">
+                <div class="mb-3">
+                     <img href="/Main/MainPage/Index" class="navbar-brand navbar-brand-autodark"><img src="/dist/img/logos/logo-white.svg" height="36" alt="Logo" />
+                </div>
+                <div class="text-secondary mb-3">Preparing application</div>
+                <div class="progress progress-sm">
+                    <div class="progress-bar progress-bar-indeterminate"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page" id="MainPage">
+        <partial name="/Areas/User/Views/Shared/SharedPartials/HeaderPartial.cshtml" />
+        <div class="page-wrapper">
+            <div class="page-body">
+                <div class="container-xl">
+                    <div class="row row-deck row-cards">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+
+            @if ((ViewData["ShowFooter"] as bool?) ?? true)
+            {
+                <partial name="/Areas/User/Views/Shared/SharedPartials/FooterPartial.cshtml" />
+            }
+        </div>
+    </div>
+    <div id="alertContainer" class="alert-container"></div>
+
+    <script src="~/js/LoaderMain.js" asp-append-version="true"></script> 
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/js/MessageClientSide.js"></script>
+
+    
+    <!--js lib-->
+    <script src="~/dist/libs/apexcharts/dist/apexcharts.min.js?1692870487" defer asp-append-version="true"></script>
+    <script src="~/dist/libs/jsvectormap/dist/js/jsvectormap.min.js?1692870487" defer asp-append-version="true"></script>
+    <script src="~/dist/libs/jsvectormap/dist/maps/world.js?1692870487" defer asp-append-version="true"></script>
+    <script src="~/dist/libs/jsvectormap/dist/maps/world-merc.js?1692870487" defer asp-append-version="true"></script>
+
+    <!--  -->
+    <script src="~/dist/js/tabler.min.js?1692870487" defer asp-append-version="true"></script>
+    <script src="~/dist/js/demo.min.js?1692870487" defer asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/6.0.0/intro.min.js"></script>
+    <script src="/js/IntroAll.js">
+    </script>
+
+</html>

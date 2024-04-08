@@ -1,0 +1,231 @@
+﻿@using System.Globalization;
+@model EditProfileViewModel
+
+<div class="page-body">
+    <div class="container-xl">
+        <div class="card" id="EditFromSection">
+            <div  class="row g-0">
+                <form asp-area="User" asp-controller="MainPage" asp-action="Profile" method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="Id"/>
+                    <div class="col-12 col-md-9 d-flex flex-column">
+                        <div class="card-body">
+                            <h2 class="mb-4">My Account</h2>
+                            <h3 class="card-title">Profile Details</h3>
+                            <div class="row align-items-center">
+                                <div id="ppSettings">
+                                    <div class="col-auto">
+                                        <span class="avatar avatar-xl" style="background-image: url('@Context.Session.GetString("ProfilePhoto")')"></span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <a href="#" class="btn btn-outline-secondary" id="changeAvatarBtn">
+                                            Change avatar
+                                        </a>
+                                        <button class="btn btn-outline-secondary" id="friendListBtn">
+                                            Friend List
+                                        </button>
+                                    </div>
+                                </div>
+                                <input type="file" asp-for="Photo" id="avatarInput" style="display: none;" />
+                            </div>
+                            <h3 class="card-title mt-4">Profile</h3>
+                            <div class="row g-3">
+                                <div class="col-md">
+                                    <div class="form-label">Name</div>
+                                    <input type="text" class="form-control" asp-for="UserName">
+                                </div>
+                                <div class="col-md">
+                                    <div class="form-label">Location</div>
+                                    <select type="text" asp-for="Country" class="form-select" id="select-countries" value=""></select>
+                                </div>
+                            </div>
+                            <h3 class="card-title mt-4">Date of Birth</h3>
+                            <p class="card-subtitle">Your date of birth</p>
+                            <div>
+                                <input type="hidden" asp-for="DateOfBirth" id="hiddenDateOfBirth" />
+                                <div class="row g-2">
+                                    <div class="col-5">
+                                        <select id="month" name="user[month]" class="form-select">
+                                            @for (int i = 1; i <= 12; i++)
+                                            {
+                                                var isSelected = Model.DateOfBirth.Month == i;
+                                                <option value="@i" selected="@isSelected">
+                                                    @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(i)
+                                                </option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-3">
+                                        <select id="day" name="user[day]" class="form-select">
+                                            @for (int i = 1; i <= 31; i++)
+                                            {
+                                                var isSelected = Model.DateOfBirth.Day == i;
+                                                <option value="@i" selected="@isSelected">@i</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
+                                        <select id="year" name="user[year]" class="form-select">
+                                            @foreach (var year in Enumerable.Range(1945, 2005 - 1945 + 1).Reverse())
+                                            {
+                                                var isSelected = Model.DateOfBirth.Year == year;
+                                                <option value="@year" selected="@isSelected">@year</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3 class="card-title mt-4">Email</h3>
+                            <p class="card-subtitle">This contact will be shown to others publicly, so choose it carefully.</p>
+                            <div>
+                                <div class="row g-2">
+                                    <div class="col-auto">
+                                        <input type="text" class="form-control w-auto" asp-for="Email">
+                                    </div>
+                                    <div class="col-auto">
+                                        <button type="submit" href="#" class="btn">
+                                            Change
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3 class="card-title mt-4">Password</h3>
+                            <p class="card-subtitle">You can set a permanent password if you don't want to use temporary login codes.</p>
+                            <div>
+                                <a href="/Account/ForgotPassword" class="btn">
+                                    Set new password
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent mt-auto">
+                            <div class="btn-list justify-content-end">
+                                <a href="#" class="btn">
+                                    Cancel
+                                </a>
+                                <button type="submit" href="#" class="btn btn-primary">
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="FriendListSection" class="displaynone">
+            <div class="page-header d-print-none">
+                <div class="container-xl">
+                    <div class="row g-2 align-items-center">
+                        <div class="col-auto mb-3">
+                            <button id="backbtn" class="btn btn-icon" onclick="backProfile()">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-arrow-left-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 2a10 10 0 0 1 .324 19.995l-.324 .005l-.324 -.005a10 10 0 0 1 .324 -19.995zm.707 5.293a1 1 0 0 0 -1.414 0l-4 4a1.048 1.048 0 0 0 -.083 .094l-.064 .092l-.052 .098l-.044 .11l-.03 .112l-.017 .126l-.003 .075l.004 .09l.007 .058l.025 .118l.035 .105l.054 .113l.043 .07l.071 .095l.054 .058l4 4l.094 .083a1 1 0 0 0 1.32 -1.497l-2.292 -2.293h5.585l.117 -.007a1 1 0 0 0 -.117 -1.993h-5.586l2.293 -2.293l.083 -.094a1 1 0 0 0 -.083 -1.32z" stroke-width="0" fill="currentColor" /></svg>
+                            </button>
+                        </div>
+                        <div class="col">
+                            <div class="input-icon col-4 mb-3 p-0">
+                                <input type="text" value="" class="form-control custom-inp" placeholder="Search…">
+                            </div>
+                        </div>
+                        <div class="col-auto ms-auto d-print-none">
+                            <div class="btn-list mb-3 p-0">
+                                <a href="#" class="btn btn-primary d-none d-md-inline-block" data-bs-toggle="modal" data-bs-target="#modal-report">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                                    Filter FriendList
+                                </a>
+                                <a href="#" class="btn btn-primary d-md-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-report" aria-label="Create new report">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="table-responsive">
+                            <table class="table table-vcenter table-mobile-md card-table">
+                                <thead class="text-sm-center">
+                                    <tr>
+                                        <th>Photo</th>
+                                        <th>Name</th>
+                                        <th>Location</th>
+                                        <th class="w-1"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @* modal *@
+            <div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Filter FriendList</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Visibility</label>
+                                        <select class="form-select">
+                                            <option value="1" selected>All</option>
+                                            <option value="2">Pending</option>
+                                            <option value="3">Accepted</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+                                Cancel
+                            </a>
+                            <a href="#" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                                Find
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal modal-blur fade" id="modal-danger" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="modal-status bg-danger"></div>
+                        <div class="modal-body text-center py-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
+                            <h3>Are you sure?</h3>
+                            <div id="modalWindowMessage" class="text-secondary">Do you really want to unfollow this user</div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="w-100">
+                                <div class="row">
+                                    <div id="denial_div" class="col">
+                                    </div>
+                                    <div id="approval_div" class="col">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="/dist/libs/tom-select/dist/js/tom-select.base.min.js"></script>
+<script src="/js/CountrySelect.js"></script>
+<script src="/js/ProfileEditMain.js"></script>
+<script src="/js/SearchRequest.js"></script>
