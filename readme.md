@@ -1,6 +1,7 @@
 # Voltages Chat
 
 Welcome to Voltages Chat! This is a simple chat website where you can connect with others in real-time.
+Chat Link : https://voltages.azurewebsites.net/
 
 ## Features
 
